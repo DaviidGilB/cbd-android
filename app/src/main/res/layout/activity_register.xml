@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.RegisterActivity">
 
     <EditText
         android:id="@+id/username_field"
@@ -33,45 +32,42 @@
         android:textColor="@color/colorPrimaryLight"
         android:textColorHighlight="@color/colorPrimaryLight"
         android:textColorHint="@color/colorPrimaryLight"
-        app:layout_constraintEnd_toEndOf="@+id/username_field"
-        app:layout_constraintStart_toStartOf="@+id/username_field"
-        app:layout_constraintTop_toBottomOf="@+id/username_field" />
+        app:layout_constraintEnd_toEndOf="@+id/email_field"
+        app:layout_constraintStart_toStartOf="@+id/email_field"
+        app:layout_constraintTop_toBottomOf="@+id/email_field" />
 
-    <Button
-        android:id="@+id/login_button"
+    <EditText
+        android:id="@+id/password_confirm_field"
         android:layout_width="320dp"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorPrimary"
-        android:drawableStart="@drawable/ic_account_circle_black_24dp"
-        android:drawablePadding="-80dp"
-        android:onClick="submit"
-        android:paddingStart="80dp"
-        android:text="@string/login_button"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="@string/password_confirm_field_mayus"
+        android:inputType="textPassword"
+        android:textColor="@color/colorPrimaryLight"
+        android:textColorHighlight="@color/colorPrimaryLight"
+        android:textColorHint="@color/colorPrimaryLight"
         app:layout_constraintEnd_toEndOf="@+id/password_field"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/password_field"
-        app:layout_constraintTop_toBottomOf="@+id/password_field"
-        tools:ignore="RtlSymmetry" />
+        app:layout_constraintTop_toBottomOf="@+id/password_field" />
 
     <Button
         android:id="@+id/register_button"
-        android:layout_width="320dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="324dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="30dp"
         android:background="@color/colorPrimary"
         android:drawableStart="@drawable/ic_add_circle_black_24dp"
-        android:drawablePadding="-90dp"
-        android:onClick="redirectRegister"
-        android:paddingStart="90dp"
-        android:text="@string/register_button_redirect"
+        android:drawablePadding="-110dp"
+        android:onClick="submit"
+        android:paddingStart="110dp"
+        android:text="@string/send_button"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/no_register_text"
+        app:layout_constraintEnd_toEndOf="@+id/password_confirm_field"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="@+id/password_confirm_field"
+        app:layout_constraintTop_toBottomOf="@+id/password_confirm_field"
         tools:ignore="RtlSymmetry" />
 
     <ImageView
@@ -86,19 +82,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_logo" />
 
-    <TextView
-        android:id="@+id/no_register_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="@string/no_register_text"
+    <EditText
+        android:id="@+id/email_field"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="@string/email_field_mayus"
+        android:inputType="textEmailAddress"
         android:textColor="@color/colorPrimaryLight"
         android:textColorHighlight="@color/colorPrimaryLight"
         android:textColorHint="@color/colorPrimaryLight"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/login_button"
-        app:layout_constraintStart_toStartOf="@+id/login_button"
-        app:layout_constraintTop_toBottomOf="@+id/login_button" />
+        app:layout_constraintEnd_toEndOf="@+id/username_field"
+        app:layout_constraintStart_toStartOf="@+id/username_field"
+        app:layout_constraintTop_toBottomOf="@+id/username_field" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
