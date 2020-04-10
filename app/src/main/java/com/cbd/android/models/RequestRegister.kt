@@ -6,14 +6,14 @@ import com.google.gson.annotations.SerializedName
 data class RequestRegister(
 
     @Expose
+    @SerializedName("username")
+    val username: String,
+
+    @Expose
     @SerializedName("email")
     val email: String,
 
     @Expose
     @SerializedName("password")
-    val password: String,
-
-    @Expose
-    @SerializedName("username")
-    val username: String
+    val password: String
 )

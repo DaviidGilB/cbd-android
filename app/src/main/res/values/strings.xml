@@ -11,4 +11,8 @@
     <string name="email_field_mayus">EMAIL</string>
     <string name="password_confirm_field_mayus">CONFIRMACIÓN CONTRASEÑA</string>
     <string name="send_button">Enviar</string>
+    <string name="title_activity_list">ListActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
