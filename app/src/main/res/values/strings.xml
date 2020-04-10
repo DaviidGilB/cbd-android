@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CBDisposal</string>
+    <string name="login_header">Inicio de sesión</string>
+    <string name="username_field">Usuario</string>
+    <string name="password_field">Contraseña</string>
+    <string name="username_field_mayus">USUARIO</string>
+    <string name="password_field_mayus">CONTRASEÑA</string>
+    <string name="login_button">Iniciar sesión</string>
+    <string name="no_register_text">¿Aún no estás registrado?</string>
+    <string name="register_button_redirect">Regístrate</string>
+</resources>
