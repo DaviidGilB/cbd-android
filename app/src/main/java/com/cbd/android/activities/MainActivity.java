@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.cbd.android.R;
 import com.cbd.android.common.Constants;
+import com.cbd.android.common.Responses;
 import com.cbd.android.models.RequestLogin;
 import com.cbd.android.models.ResponseAuth;
 import com.cbd.android.retrofit.CBDisposalClient;
@@ -61,18 +62,19 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<ResponseAuth> call, Response<ResponseAuth> response) {
                     try {
                         Toast.makeText(MainActivity.this, response.body().getInfo().getMessage(), Toast.LENGTH_LONG).show();
-                        if (response.isSuccessful()) {
+                        if (response.body().getInfo().getCode() == Responses.OK_SESION_INICIADA_CORRECTAMENTE) {
                             Intent intent = new Intent(MainActivity.this, ListActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     } catch (Exception e) {
-                        Toast.makeText(MainActivity.this, Constants.ERROR_GENERAL, Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, Constants.ERROR_INESPERADO, Toast.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseAuth> call, Throwable t) {
-                    Toast.makeText(MainActivity.this, Constants.ERROR_GENERAL, Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, Constants.ERROR_COMUNICACION, Toast.LENGTH_LONG).show();
                 }
             });
         }
