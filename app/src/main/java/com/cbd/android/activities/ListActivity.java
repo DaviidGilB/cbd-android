@@ -2,8 +2,10 @@ package com.cbd.android.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.cbd.android.R;
+import com.cbd.android.common.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import okhttp3.internal.Util;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -27,11 +31,15 @@ public class ListActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        // Prueba
+        Toast.makeText(ListActivity.this, Utils.getToken(), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Utils.deleteToken();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cbd.android.R;
 import com.cbd.android.common.Constants;
 import com.cbd.android.common.Responses;
+import com.cbd.android.common.Utils;
 import com.cbd.android.models.RequestRegister;
 import com.cbd.android.models.ResponseAuth;
 import com.cbd.android.retrofit.CBDisposalClient;
@@ -85,6 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onResponse(Call<ResponseAuth> call, Response<ResponseAuth> response) {
                     Toast.makeText(RegisterActivity.this, response.body().getInfo().getMessage(), Toast.LENGTH_LONG).show();
                     if (response.body().getInfo().getCode() == Responses.OK_USUARIO_CREADO_CORRECTAMENTE) {
+                        Utils.saveToken(response.body().getObject());
                         Intent intent = new Intent(RegisterActivity.this, ListActivity.class);
                         startActivity(intent);
                         finish();

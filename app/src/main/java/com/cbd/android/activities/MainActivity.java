@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cbd.android.R;
 import com.cbd.android.common.Constants;
 import com.cbd.android.common.Responses;
+import com.cbd.android.common.Utils;
 import com.cbd.android.models.RequestLogin;
 import com.cbd.android.models.ResponseAuth;
 import com.cbd.android.retrofit.CBDisposalClient;
@@ -28,10 +29,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        retrofitInit();
-        fieldsInit();
+        if (!Utils.hasToken()) {
+            setContentView(R.layout.activity_main);
+
+            retrofitInit();
+            fieldsInit();
+        } else {
+            Intent intent = new Intent(MainActivity.this, ListActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void retrofitInit() {
@@ -63,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         Toast.makeText(MainActivity.this, response.body().getInfo().getMessage(), Toast.LENGTH_LONG).show();
                         if (response.body().getInfo().getCode() == Responses.OK_SESION_INICIADA_CORRECTAMENTE) {
+                            Utils.saveToken(response.body().getObject());
                             Intent intent = new Intent(MainActivity.this, ListActivity.class);
                             startActivity(intent);
                             finish();
