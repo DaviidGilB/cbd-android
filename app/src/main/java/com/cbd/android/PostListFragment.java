@@ -11,7 +11,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class PostFragment extends Fragment {
+import com.cbd.android.models.Post;
+
+import java.util.List;
+
+public class PostListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -19,18 +23,19 @@ public class PostFragment extends Fragment {
     private int mColumnCount = 1;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
+    private List<Post> postList;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public PostFragment() {
+    public PostListFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static PostFragment newInstance(int columnCount) {
-        PostFragment fragment = new PostFragment();
+    public static PostListFragment newInstance(int columnCount) {
+        PostListFragment fragment = new PostListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -60,24 +65,13 @@ public class PostFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            adapter = new MyPostRecyclerViewAdapter(getActivity(), postList);
-            recyclerView.setAdapter(adapter);
+            loadPostData();
         }
         return view;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+    private void loadPostData() {
+        adapter = new MyPostRecyclerViewAdapter(getActivity(), postList);
+        recyclerView.setAdapter(adapter);
     }
 }

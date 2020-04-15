@@ -8,12 +8,12 @@
 
     <item
         android:id="@+id/navigation_my_posts"
-        android:icon="@drawable/ic_folder_shared_black_24dp"
+        android:icon="@drawable/ic_folder_shared_white_24dp"
         android:title="" />
 
     <item
         android:id="@+id/navigation_my_profile"
-        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:icon="@drawable/ic_account_circle_white_24dp"
         android:title="" />
 
 </menu>

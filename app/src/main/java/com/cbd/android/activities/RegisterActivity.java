@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onResponse(Call<ResponseAuth> call, Response<ResponseAuth> response) {
                     Toast.makeText(RegisterActivity.this, response.body().getInfo().getMessage(), Toast.LENGTH_LONG).show();
                     if (response.body().getInfo().getCode() == Responses.OK_USUARIO_CREADO_CORRECTAMENTE) {
-                        Utils.saveToken(response.body().getObject());
+                        Utils.saveToken(response.body().getToken());
                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();

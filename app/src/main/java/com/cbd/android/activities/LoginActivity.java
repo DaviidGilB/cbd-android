@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         Toast.makeText(LoginActivity.this, response.body().getInfo().getMessage(), Toast.LENGTH_LONG).show();
                         if (response.body().getInfo().getCode() == Responses.OK_SESION_INICIADA_CORRECTAMENTE) {
-                            Utils.saveToken(response.body().getObject());
+                            Utils.saveToken(response.body().getToken());
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();

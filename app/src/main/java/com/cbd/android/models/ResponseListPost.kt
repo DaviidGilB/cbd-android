@@ -2,11 +2,11 @@ package com.cbd.android.models
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseAuth(
+data class ResponseListPost(
 
     @SerializedName("info")
     val info: Info,
 
     @SerializedName("object")
-    val token: String
+    val posts: List<Post>
 )

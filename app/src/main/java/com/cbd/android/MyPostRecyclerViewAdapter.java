@@ -1,29 +1,26 @@
 package com.cbd.android;
 
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cbd.android.PostFragment.OnListFragmentInteractionListener;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.cbd.android.models.Post;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private List<Post> mValues;
+    private Context content;
 
-    public MyPostRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
-        mListener = listener;
+    public MyPostRecyclerViewAdapter(Context content, List<Post> items) {
+        this.mValues = items;
+        this.content = content;
     }
 
     @Override
@@ -36,19 +33,15 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
+        holder.title.setText(holder.mItem.getTitle());
+        holder.description.setText(holder.mItem.getDescription());
+
+        // TODO: CARGADO IMÁGENES
+        /*
+        Glide.with(content).load("https://cbd-android-mongo.herokuapp.com/photos/" + "URL DE LA FOTO EN BACKEND")
+                .into(holder.avatar);
+         */
     }
 
     @Override
@@ -58,20 +51,22 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final ImageView avatar;
+        public final TextView title;
+        public final TextView description;
+        public Post mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            avatar = (ImageView) view.findViewById(R.id.user_imagen_post);
+            title = (TextView) view.findViewById(R.id.post_title);
+            description = (TextView) view.findViewById(R.id.post_description);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + title.getText() + "'";
         }
     }
 }
