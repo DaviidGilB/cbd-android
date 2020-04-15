@@ -24,9 +24,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         Objects.requireNonNull(getSupportActionBar()).hide();
-
-        // Prueba
-        Toast.makeText(MainActivity.this, Utils.getToken(), Toast.LENGTH_LONG).show();
     }
 
     @Override
