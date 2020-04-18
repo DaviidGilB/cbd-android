@@ -20,5 +20,8 @@ data class Post(
     val userId: String,
 
     @SerializedName("photo")
-    val photo: String
+    val photo: String,
+
+    @SerializedName("user")
+    val user: User
 )

@@ -38,8 +38,11 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
 
         holder.title.setText(holder.mItem.getTitle());
         holder.description.setText(holder.mItem.getDescription());
+        if (!holder.mItem.getUser().getAvatar().isEmpty()) {
+            Glide.with(content).load(Constants.BASE_URL + holder.mItem.getUser().getAvatar()).into(holder.avatar);
+        }
         if (!holder.mItem.getPhoto().isEmpty()) {
-            Glide.with(content).load(Constants.BASE_URL + holder.mItem.getPhoto()).into(holder.avatar);
+            Glide.with(content).load(Constants.BASE_URL + holder.mItem.getPhoto()).into(holder.photo);
         }
     }
 
@@ -51,6 +54,7 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final ImageView avatar;
+        public final ImageView photo;
         public final TextView title;
         public final TextView description;
         public Post mItem;
@@ -59,6 +63,7 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
             super(view);
             mView = view;
             avatar = (ImageView) view.findViewById(R.id.user_imagen_post);
+            photo = (ImageView) view.findViewById(R.id.imagen_post) ;
             title = (TextView) view.findViewById(R.id.post_title);
             description = (TextView) view.findViewById(R.id.post_description);
         }
