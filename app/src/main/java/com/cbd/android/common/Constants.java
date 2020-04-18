@@ -1,7 +1,8 @@
 package com.cbd.android.common;
 
 public class Constants {
-    public static final String API_BASE_URL = "https://cbd-android-mongo.herokuapp.com/";
+    public static final String BASE_URL = "https://cbd-android-mongo.herokuapp.com";
+    public static final String API_BASE_URL = BASE_URL + "/";
     public static final String APP_SETTINGS_FILE = "APP_SETTINGS";
     public static final String TOKEN = "TOKEN";
 

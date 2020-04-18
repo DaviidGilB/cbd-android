@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.cbd.android.common.Constants;
 import com.cbd.android.models.Post;
 
 import java.util.List;
@@ -36,12 +38,9 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
 
         holder.title.setText(holder.mItem.getTitle());
         holder.description.setText(holder.mItem.getDescription());
-
-        // TODO: CARGADO IMÁGENES
-        /*
-        Glide.with(content).load("https://cbd-android-mongo.herokuapp.com/photos/" + "URL DE LA FOTO EN BACKEND")
-                .into(holder.avatar);
-         */
+        if (!holder.mItem.getPhoto().isEmpty()) {
+            Glide.with(content).load(Constants.BASE_URL + holder.mItem.getPhoto()).into(holder.avatar);
+        }
     }
 
     @Override
