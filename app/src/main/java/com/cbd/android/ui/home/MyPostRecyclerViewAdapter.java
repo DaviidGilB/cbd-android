@@ -27,6 +27,11 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
         this.content = content;
     }
 
+    public void setData(List<Post> postList) {
+        this.mValues = postList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -37,23 +42,29 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
+        if (mValues != null) {
+            holder.mItem = mValues.get(position);
 
-        holder.title.setText(holder.mItem.getTitle());
-        holder.description.setText(holder.mItem.getDescription());
-        holder.price.setText(holder.mItem.getPrice() + " €");
-        holder.userInfo.setText(holder.mItem.getUser().getName() + " (" + holder.mItem.getUser().getEmail() + ")");
-        if (!holder.mItem.getUser().getAvatar().isEmpty()) {
-            Glide.with(content).load(Constants.BASE_URL + holder.mItem.getUser().getAvatar()).into(holder.avatar);
-        }
-        if (!holder.mItem.getPhoto().isEmpty()) {
-            Glide.with(content).load(Constants.BASE_URL + holder.mItem.getPhoto()).into(holder.photo);
+            holder.title.setText(holder.mItem.getTitle());
+            holder.description.setText(holder.mItem.getDescription());
+            holder.price.setText(holder.mItem.getPrice() + " €");
+            holder.userInfo.setText(holder.mItem.getUser().getName() + " (" + holder.mItem.getUser().getEmail() + ")");
+            if (!holder.mItem.getUser().getAvatar().isEmpty()) {
+                Glide.with(content).load(Constants.BASE_URL + holder.mItem.getUser().getAvatar()).into(holder.avatar);
+            }
+            if (!holder.mItem.getPhoto().isEmpty()) {
+                Glide.with(content).load(Constants.BASE_URL + holder.mItem.getPhoto()).into(holder.photo);
+            }
         }
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        if (mValues != null) {
+            return mValues.size();
+        } else {
+            return 0;
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
