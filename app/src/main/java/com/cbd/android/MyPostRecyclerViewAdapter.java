@@ -1,5 +1,6 @@
 package com.cbd.android;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +33,15 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
         holder.title.setText(holder.mItem.getTitle());
         holder.description.setText(holder.mItem.getDescription());
+        holder.price.setText(holder.mItem.getPrice() + " €");
+        holder.userInfo.setText(holder.mItem.getUser().getName() + " (" + holder.mItem.getUser().getEmail() + ")");
         if (!holder.mItem.getUser().getAvatar().isEmpty()) {
             Glide.with(content).load(Constants.BASE_URL + holder.mItem.getUser().getAvatar()).into(holder.avatar);
         }
@@ -57,6 +61,8 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
         public final ImageView photo;
         public final TextView title;
         public final TextView description;
+        public final TextView price;
+        public final TextView userInfo;
         public Post mItem;
 
         public ViewHolder(View view) {
@@ -66,6 +72,8 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
             photo = (ImageView) view.findViewById(R.id.imagen_post) ;
             title = (TextView) view.findViewById(R.id.post_title);
             description = (TextView) view.findViewById(R.id.post_description);
+            price = (TextView) view.findViewById(R.id.post_price);
+            userInfo = (TextView) view.findViewById(R.id.post_user_info);
         }
 
         @Override
