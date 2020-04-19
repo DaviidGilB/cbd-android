@@ -23,7 +23,7 @@ import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
     // Campos
-    EditText usernameField, emailField, passwordField, passwordConfirmField;
+    EditText usernameField, emailField, passwordField, passwordConfirmField, nameField;
 
     // Otros
     boolean submit;
@@ -48,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void fieldsInit() {
         usernameField = findViewById(R.id.username_field);
+        nameField = findViewById(R.id.name_field);
         emailField = findViewById(R.id.email_field);
         passwordField = findViewById(R.id.password_field);
         passwordConfirmField = findViewById(R.id.password_confirm_field);
@@ -55,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void submit(View view) {
         String username = usernameField.getText().toString();
+        String name = nameField.getText().toString();
         String email = emailField.getText().toString();
         String password = passwordField.getText().toString();
         String passwordConfirm = passwordConfirmField.getText().toString();
@@ -62,6 +64,10 @@ public class RegisterActivity extends AppCompatActivity {
         submit = true;
         if (username.isEmpty()) {
             usernameField.setError(Constants.ERROR_USUARIO_VACIO);
+            submit = false;
+        }
+        if (name.isEmpty()) {
+            nameField.setError(Constants.ERROR_NOMBRE_VACIO);
             submit = false;
         }
         if (email.isEmpty()) {
@@ -79,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if (submit) {
-            RequestRegister requestRegister = new RequestRegister(username, email, password);
+            RequestRegister requestRegister = new RequestRegister(username, email, password, name);
             Call<ResponseGeneric> call = this.cbdisposalService.register(requestRegister);
             call.enqueue(new Callback<ResponseGeneric>() {
                 @Override

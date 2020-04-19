@@ -29,4 +29,5 @@
     <string name="post_title_mayus">TÍTULO</string>
     <string name="post_descripcion_mayus">DESCRIPCIÓN</string>
     <string name="post_price_mayus">PRECIO</string>
+    <string name="name_field_mayus">NOMBRE</string>
 </resources>

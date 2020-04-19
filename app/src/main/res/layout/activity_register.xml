@@ -93,6 +93,21 @@
         android:textColor="@color/colorPrimaryLight"
         android:textColorHighlight="@color/colorPrimaryLight"
         android:textColorHint="@color/colorPrimaryLight"
+        app:layout_constraintEnd_toEndOf="@+id/name_field"
+        app:layout_constraintStart_toStartOf="@+id/name_field"
+        app:layout_constraintTop_toBottomOf="@+id/name_field" />
+
+    <EditText
+        android:id="@+id/name_field"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="@string/name_field_mayus"
+        android:inputType="textPersonName"
+        android:textColor="@color/colorPrimaryLight"
+        android:textColorHighlight="@color/colorPrimaryLight"
+        android:textColorHint="@color/colorPrimaryLight"
         app:layout_constraintEnd_toEndOf="@+id/username_field"
         app:layout_constraintStart_toStartOf="@+id/username_field"
         app:layout_constraintTop_toBottomOf="@+id/username_field" />
