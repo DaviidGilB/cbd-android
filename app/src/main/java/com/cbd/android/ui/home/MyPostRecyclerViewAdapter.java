@@ -54,6 +54,8 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
             }
             if (!holder.mItem.getPhoto().isEmpty()) {
                 Glide.with(content).load(Constants.BASE_URL + holder.mItem.getPhoto()).into(holder.photo);
+            } else {
+                holder.photo.setVisibility(View.GONE);
             }
         }
     }

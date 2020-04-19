@@ -25,4 +25,8 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="index_title">Inicio</string>
+    <string name="post_button">Publicar</string>
+    <string name="post_title_mayus">TÍTULO</string>
+    <string name="post_descripcion_mayus">DESCRIPCIÓN</string>
+    <string name="post_price_mayus">PRECIO</string>
 </resources>
