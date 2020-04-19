@@ -16,6 +16,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.cbd.android.R;
+import com.cbd.android.common.Constants;
 import com.cbd.android.viewModels.PostViewModel;
 
 import java.util.Objects;
@@ -54,9 +55,25 @@ public class NewPostDialogFragment extends DialogFragment implements View.OnClic
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.post_publish_button) {
-            PostViewModel postViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity()))
-                    .get(PostViewModel.class);
-            postViewModel.publishPost(postTitleInput.getText().toString(), postDescriptionInput.getText().toString(), Double.valueOf(postPriceInput.getText().toString()));
+            String title = postTitleInput.getText().toString();
+            String description = postDescriptionInput.getText().toString();
+            String price = postPriceInput.getText().toString();
+
+            if (title.isEmpty()) {
+                postTitleInput.setError(Constants.ERROR_TITULO_VACIO);
+            }
+            if (description.isEmpty()) {
+                postDescriptionInput.setError(Constants.ERROR_DESCRIPCION_VACIO);
+            }
+            if (price.isEmpty()) {
+                postPriceInput.setError(Constants.ERROR_PRECIO_VACIO);
+            }
+            if (!title.isEmpty() && !description.isEmpty() && !price.isEmpty()) {
+                PostViewModel postViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity()))
+                        .get(PostViewModel.class);
+                postViewModel.publishPost(title, description, Double.valueOf(price));
+                Objects.requireNonNull(getDialog()).dismiss();
+            }
         } else if (id == R.id.post_exit) {
             showDialogConfirm();
         }

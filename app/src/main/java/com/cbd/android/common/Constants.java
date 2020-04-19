@@ -14,4 +14,8 @@ public class Constants {
     public static final String ERROR_EMAIL_VACIO = "Debe indicar un email";
     public static final String ERROR_CONTRASENAS_VACIAS = "Debe indicar la misma contraseña dos veces";
     public static final String ERROR_TOKEN_INCORRECTO = "Debe iniciar sesión de nuevo";
+    public static final String ERROR_TITULO_VACIO = "Debe indicar un título";
+    public static final String ERROR_DESCRIPCION_VACIO = "Debe indicar una descripción";
+    public static final String ERROR_PRECIO_VACIO = "Debe indicar un precio";
+
 }

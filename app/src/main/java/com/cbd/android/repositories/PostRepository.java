@@ -46,6 +46,7 @@ public class PostRepository {
                         allPosts.setValue(response.body().getPosts());
                     } else if (response.body().getInfo().getCode() == Responses.ERROR_TOKEN_INVALIDO) {
                         Toast.makeText(MyApp.getContext(), Constants.ERROR_TOKEN_INCORRECTO, Toast.LENGTH_LONG).show();
+                        allPosts.setValue(null);
                     }
                 } catch (Exception e) {
                     Toast.makeText(MyApp.getContext(), Constants.ERROR_INESPERADO, Toast.LENGTH_LONG).show();

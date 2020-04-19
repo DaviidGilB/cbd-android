@@ -88,8 +88,12 @@ public class PostListFragment extends Fragment {
         postViewModel.getPosts().observe(Objects.requireNonNull(getActivity()), new Observer<List<Post>>() {
             @Override
             public void onChanged(List<Post> posts) {
-                postList = posts;
-                adapter.setData(postList);
+                if (posts != null) {
+                    postList = posts;
+                    adapter.setData(postList);
+                } else {
+                    Objects.requireNonNull(getActivity()).onBackPressed();
+                }
             }
         });
     }
