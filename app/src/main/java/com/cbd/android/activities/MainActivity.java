@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.cbd.android.PostListFragment;
+import com.cbd.android.ui.home.PostListFragment;
 import com.cbd.android.R;
 import com.cbd.android.common.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

@@ -1,4 +1,4 @@
-package com.cbd.android;
+package com.cbd.android.ui.home;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.cbd.android.R;
 import com.cbd.android.common.Constants;
 import com.cbd.android.models.Post;
 

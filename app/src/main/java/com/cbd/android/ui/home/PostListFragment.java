@@ -1,7 +1,6 @@
-package com.cbd.android;
+package com.cbd.android.ui.home;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cbd.android.activities.LoginActivity;
-import com.cbd.android.activities.MainActivity;
+import com.cbd.android.R;
 import com.cbd.android.common.Constants;
 import com.cbd.android.common.Responses;
 import com.cbd.android.models.Post;
