@@ -11,7 +11,7 @@ import com.cbd.android.common.Constants;
 import com.cbd.android.common.Responses;
 import com.cbd.android.common.Utils;
 import com.cbd.android.models.RequestLogin;
-import com.cbd.android.models.ResponseAuth;
+import com.cbd.android.models.ResponseGeneric;
 import com.cbd.android.retrofit.CBDisposalClient;
 import com.cbd.android.retrofit.CBDisposalService;
 import retrofit2.Call;
@@ -64,10 +64,10 @@ public class LoginActivity extends AppCompatActivity {
         }
         if (!username.isEmpty() && !password.isEmpty()) {
             RequestLogin requestLogin = new RequestLogin(username, password);
-            Call<ResponseAuth> call = this.cbdisposalService.login(requestLogin);
-            call.enqueue(new Callback<ResponseAuth>() {
+            Call<ResponseGeneric> call = this.cbdisposalService.login(requestLogin);
+            call.enqueue(new Callback<ResponseGeneric>() {
                 @Override
-                public void onResponse(Call<ResponseAuth> call, Response<ResponseAuth> response) {
+                public void onResponse(Call<ResponseGeneric> call, Response<ResponseGeneric> response) {
                     try {
                         Toast.makeText(LoginActivity.this, response.body().getInfo().getMessage(), Toast.LENGTH_LONG).show();
                         if (response.body().getInfo().getCode() == Responses.OK_SESION_INICIADA_CORRECTAMENTE) {
@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseAuth> call, Throwable t) {
+                public void onFailure(Call<ResponseGeneric> call, Throwable t) {
                     Toast.makeText(LoginActivity.this, Constants.ERROR_COMUNICACION, Toast.LENGTH_LONG).show();
                 }
             });

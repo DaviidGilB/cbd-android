@@ -22,4 +22,8 @@ public class PostViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Post>> getPosts() {return posts; }
+
+    public void publishPost(String title, String description, Double price) {
+        postRepository.createPost(title, description, price);
+    }
 }

@@ -13,7 +13,7 @@ import com.cbd.android.common.Constants;
 import com.cbd.android.common.Responses;
 import com.cbd.android.common.Utils;
 import com.cbd.android.models.RequestRegister;
-import com.cbd.android.models.ResponseAuth;
+import com.cbd.android.models.ResponseGeneric;
 import com.cbd.android.retrofit.CBDisposalClient;
 import com.cbd.android.retrofit.CBDisposalService;
 
@@ -80,10 +80,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (submit) {
             RequestRegister requestRegister = new RequestRegister(username, email, password);
-            Call<ResponseAuth> call = this.cbdisposalService.register(requestRegister);
-            call.enqueue(new Callback<ResponseAuth>() {
+            Call<ResponseGeneric> call = this.cbdisposalService.register(requestRegister);
+            call.enqueue(new Callback<ResponseGeneric>() {
                 @Override
-                public void onResponse(Call<ResponseAuth> call, Response<ResponseAuth> response) {
+                public void onResponse(Call<ResponseGeneric> call, Response<ResponseGeneric> response) {
                     Toast.makeText(RegisterActivity.this, response.body().getInfo().getMessage(), Toast.LENGTH_LONG).show();
                     if (response.body().getInfo().getCode() == Responses.OK_USUARIO_CREADO_CORRECTAMENTE) {
                         Utils.saveToken(response.body().getToken());
@@ -94,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseAuth> call, Throwable t) {
+                public void onFailure(Call<ResponseGeneric> call, Throwable t) {
                     Toast.makeText(RegisterActivity.this, Constants.ERROR_COMUNICACION, Toast.LENGTH_LONG).show();
                 }
             });

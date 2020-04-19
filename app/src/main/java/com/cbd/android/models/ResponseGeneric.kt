@@ -2,7 +2,7 @@ package com.cbd.android.models
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseAuth(
+data class ResponseGeneric(
 
     @SerializedName("info")
     val info: Info,
