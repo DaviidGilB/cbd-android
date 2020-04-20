@@ -77,7 +77,7 @@ public class PostListFragment extends Fragment {
             @Override
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(true);
-                loadData();
+                loadRefreshedData();
             }
         });
 
@@ -97,6 +97,20 @@ public class PostListFragment extends Fragment {
 
     private void loadData() {
         postViewModel.getPosts().observe(Objects.requireNonNull(getActivity()), new Observer<List<Post>>() {
+            @Override
+            public void onChanged(List<Post> posts) {
+                if (posts != null) {
+                    postList = posts;
+                    adapter.setData(postList);
+                } else {
+                    Objects.requireNonNull(getActivity()).onBackPressed();
+                }
+            }
+        });
+    }
+
+    private void loadRefreshedData() {
+        postViewModel.getRefreshedPosts().observe(Objects.requireNonNull(getActivity()), new Observer<List<Post>>() {
             @Override
             public void onChanged(List<Post> posts) {
                 if (posts != null) {
