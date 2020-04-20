@@ -19,4 +19,6 @@ public class Constants {
     public static final String ERROR_DESCRIPCION_VACIO = "Debe indicar una descripción";
     public static final String ERROR_PRECIO_VACIO = "Debe indicar un precio";
 
+    public static final String POST_LIST_TYPE = "POST_LIST_TYPE";
+    public static final int POST_LIST_ALL = 1;
 }

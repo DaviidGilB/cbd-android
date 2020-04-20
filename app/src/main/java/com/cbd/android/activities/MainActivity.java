@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.cbd.android.R;
+import com.cbd.android.common.Constants;
 import com.cbd.android.common.Utils;
 import com.cbd.android.ui.home.PostListFragment;
 import com.cbd.android.ui.newPost.NewPostDialogFragment;
@@ -40,19 +42,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Carga del fragment
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainer, new PostListFragment()).commit();
+                .add(R.id.fragmentContainer, PostListFragment.newInstance(Constants.POST_LIST_ALL)).commit();
 
         // Listener navegación
         navView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                        Fragment f = null;
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
-                                return true;
+                                f = PostListFragment.newInstance(Constants.POST_LIST_ALL);
+                                break;
                             case R.id.navigation_my_profile:
-                                return true;
+                                break;
                         }
+
+                        if (f != null) {
+                            getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.fragmentContainer, f)
+                                    .commit();
+                        }
+
                         return false;
                     }
                 });

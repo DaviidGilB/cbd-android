@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cbd.android.R;
+import com.cbd.android.common.Constants;
 import com.cbd.android.models.Post;
 import com.cbd.android.viewModels.PostViewModel;
 
@@ -23,29 +24,22 @@ import java.util.Objects;
 
 public class PostListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
+    private int postListType = 1;
     private RecyclerView recyclerView;
     private MyPostRecyclerViewAdapter adapter;
     private List<Post> postList;
     private PostViewModel postViewModel;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public PostListFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static PostListFragment newInstance(int columnCount) {
+    public static PostListFragment newInstance(int postListType) {
         PostListFragment fragment = new PostListFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putInt(Constants.POST_LIST_TYPE, postListType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,7 +52,7 @@ public class PostListFragment extends Fragment {
                 .get(PostViewModel.class);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            postListType = getArguments().getInt(Constants.POST_LIST_TYPE);
         }
     }
 
@@ -81,11 +75,7 @@ public class PostListFragment extends Fragment {
             }
         });
 
-        if (mColumnCount <= 1) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-        }
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         adapter = new MyPostRecyclerViewAdapter(getActivity(), postList);
         recyclerView.setAdapter(adapter);
