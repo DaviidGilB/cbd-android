@@ -62,8 +62,7 @@ public class PostRepository {
     }
 
     public void createPost(String title, String description, Double price) {
-        RequestNewPost requestNewPost = new RequestNewPost(description, price, title);
-        Call<ResponseGeneric> call = cbdAuthDisposalService.createPost(requestNewPost);
+        Call<ResponseGeneric> call = cbdAuthDisposalService.createPost(title, description, price);
 
         call.enqueue(new Callback<ResponseGeneric>() {
             @Override
