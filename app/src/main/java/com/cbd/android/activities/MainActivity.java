@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         finish();
     }
 
-    private void exit() {
+    public void exit() {
         Utils.deleteToken();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.cbd.android.R;
 import com.cbd.android.common.Constants;
 import com.cbd.android.common.Responses;
@@ -14,6 +16,7 @@ import com.cbd.android.models.RequestLogin;
 import com.cbd.android.models.ResponseGeneric;
 import com.cbd.android.retrofit.CBDisposalClient;
 import com.cbd.android.retrofit.CBDisposalService;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

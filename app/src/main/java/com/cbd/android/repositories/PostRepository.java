@@ -8,7 +8,6 @@ import com.cbd.android.common.Constants;
 import com.cbd.android.common.MyApp;
 import com.cbd.android.common.Responses;
 import com.cbd.android.models.Post;
-import com.cbd.android.models.RequestNewPost;
 import com.cbd.android.models.ResponseGeneric;
 import com.cbd.android.models.ResponseListPost;
 import com.cbd.android.retrofit.CBDAuthDisposalClient;

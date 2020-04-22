@@ -15,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cbd.android.R;
+import com.cbd.android.activities.MainActivity;
 import com.cbd.android.common.Constants;
+import com.cbd.android.common.Utils;
 import com.cbd.android.models.Post;
 import com.cbd.android.viewModels.PostViewModel;
 
@@ -93,7 +95,7 @@ public class PostListFragment extends Fragment {
                     postList = posts;
                     adapter.setData(postList);
                 } else {
-                    Objects.requireNonNull(getActivity()).onBackPressed();
+                    ((MainActivity) Objects.requireNonNull(getActivity())).exit();
                 }
             }
         });
@@ -108,7 +110,7 @@ public class PostListFragment extends Fragment {
                     adapter.setData(postList);
                     swipeRefreshLayout.setRefreshing(false);
                 } else {
-                    Objects.requireNonNull(getActivity()).onBackPressed();
+                    ((MainActivity) Objects.requireNonNull(getActivity())).exit();
                 }
             }
         });
