@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.cbd.android.activities.MainActivity;
 import com.cbd.android.models.Post;
 import com.cbd.android.repositories.PostRepository;
 import com.google.gson.internal.$Gson$Types;

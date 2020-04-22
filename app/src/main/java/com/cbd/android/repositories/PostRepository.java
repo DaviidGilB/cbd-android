@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.cbd.android.activities.MainActivity;
 import com.cbd.android.common.Constants;
 import com.cbd.android.common.MyApp;
 import com.cbd.android.common.Responses;
@@ -78,9 +79,7 @@ public class PostRepository {
             public void onResponse(Call<ResponseGeneric> call, Response<ResponseGeneric> response) {
                 try {
                     Toast.makeText(MyApp.getContext(), response.body().getInfo().getMessage(), Toast.LENGTH_LONG).show();
-                    if (response.body().getInfo().getCode() == Responses.OK_PUBLICACION_CREADA_CORRECTAMENTE) {
-                        getAllPosts();
-                    } else if (response.body().getInfo().getCode() == Responses.ERROR_TOKEN_INVALIDO) {
+                    if (response.body().getInfo().getCode() == Responses.ERROR_TOKEN_INVALIDO) {
                         Toast.makeText(MyApp.getContext(), Constants.ERROR_TOKEN_INCORRECTO, Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {

@@ -86,20 +86,20 @@ public class NewPostDialogFragment extends DialogFragment implements View.OnClic
             if (price.isEmpty()) {
                 postPriceInput.setError(Constants.ERROR_PRECIO_VACIO);
             }
-            if (imagenSeleccionada == null) {
-                Toast.makeText(getActivity(), "No has seleccionado ninguna imagen", Toast.LENGTH_SHORT).show();
-            }
-            if (!title.isEmpty() && !description.isEmpty() && !price.isEmpty() && imagenSeleccionada != null) {
+            if (!title.isEmpty() && !description.isEmpty() && !price.isEmpty()) {
                 PostViewModel postViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity()))
                         .get(PostViewModel.class);
 
+            Bitmap bmp = null;
+            if (imagenSeleccionada != null) {
                 try {
-                    Bitmap bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imagenSeleccionada);
-                    postViewModel.publishPost(title, description, Double.valueOf(price), bmp);
+                    bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imagenSeleccionada);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Objects.requireNonNull(getDialog()).dismiss();
+            }
+            postViewModel.publishPost(title, description, Double.valueOf(price), bmp);
+            Objects.requireNonNull(getDialog()).dismiss();
             }
         } else if (id == R.id.post_exit) {
             showDialogConfirm();
