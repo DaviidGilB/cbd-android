@@ -1,6 +1,8 @@
 package com.cbd.android.viewModels;
 
 import android.app.Application;
+import android.graphics.Bitmap;
+import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -8,6 +10,7 @@ import androidx.lifecycle.LiveData;
 
 import com.cbd.android.models.Post;
 import com.cbd.android.repositories.PostRepository;
+import com.google.gson.internal.$Gson$Types;
 
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class PostViewModel extends AndroidViewModel {
         return posts;
     }
 
-    public void publishPost(String title, String description, Double price) {
-        postRepository.createPost(title, description, price);
+    public void publishPost(String title, String description, Double price, Bitmap bmp) {
+        postRepository.createPost(title, description, price, bmp);
     }
 }

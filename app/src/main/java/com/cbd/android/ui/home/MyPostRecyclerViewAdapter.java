@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cbd.android.R;
 import com.cbd.android.common.Constants;
+import com.cbd.android.common.Utils;
 import com.cbd.android.models.Post;
 
 import java.util.List;
@@ -67,7 +68,7 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
             }
             if (!holder.mItem.getPhoto().isEmpty()) {
                 Glide.with(content)
-                        .load(Constants.BASE_URL + holder.mItem.getPhoto())
+                        .load(Utils.getBitmapFromBase64(holder.mItem.getPhoto()))
                         .dontAnimate()
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true)

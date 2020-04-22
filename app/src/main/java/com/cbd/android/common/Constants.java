@@ -21,4 +21,5 @@ public class Constants {
 
     public static final String POST_LIST_TYPE = "POST_LIST_TYPE";
     public static final int POST_LIST_ALL = 1;
+    public static final int SELECT_PHOTO_GALLERY = 1;
 }

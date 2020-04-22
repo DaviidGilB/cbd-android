@@ -1,33 +1,48 @@
 package com.cbd.android.activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.cbd.android.R;
 import com.cbd.android.common.Constants;
 import com.cbd.android.common.Utils;
 import com.cbd.android.ui.home.PostListFragment;
 import com.cbd.android.ui.newPost.NewPostDialogFragment;
+import com.cbd.android.viewModels.PostViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, PermissionListener {
     private BottomNavigationView navView;
     private FloatingActionButton fab;
     private ImageView appExitImage;
     private TextView appExitText;
+    private PostViewModel postViewModel;
+
+    // Gestión imagen
+    private Uri imagenSeleccionada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         navView = findViewById(R.id.nav_view);
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+        postViewModel = ViewModelProviders.of(this).get(PostViewModel.class);
 
         fab = findViewById(R.id.fab);
         appExitImage = findViewById(R.id.app_exit);
@@ -120,5 +137,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode != RESULT_CANCELED) {
+            if (requestCode == Constants.SELECT_PHOTO_GALLERY) {
+                if (data != null) {
+                    imagenSeleccionada = data.getData();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+        Intent seleccionarFoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(seleccionarFoto, Constants.SELECT_PHOTO_GALLERY);
+    }
+
+    @Override
+    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+    }
+
+    @Override
+    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+    }
+
+    public Uri getImagenSeleccionada() {
+        return imagenSeleccionada;
+    }
+
+    public void setImagenSeleccionada(Uri imagenSeleccionada) {
+        this.imagenSeleccionada = imagenSeleccionada;
+    }
+
+    public void recargaFragmentoAllPosts() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, PostListFragment.newInstance(Constants.POST_LIST_ALL)).commit();
     }
 }

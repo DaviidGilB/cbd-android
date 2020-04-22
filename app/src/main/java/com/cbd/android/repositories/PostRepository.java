@@ -1,5 +1,8 @@
 package com.cbd.android.repositories;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -7,14 +10,20 @@ import androidx.lifecycle.MutableLiveData;
 import com.cbd.android.common.Constants;
 import com.cbd.android.common.MyApp;
 import com.cbd.android.common.Responses;
+import com.cbd.android.common.Utils;
 import com.cbd.android.models.Post;
+import com.cbd.android.models.RequestNewPost;
 import com.cbd.android.models.ResponseGeneric;
 import com.cbd.android.models.ResponseListPost;
 import com.cbd.android.retrofit.CBDAuthDisposalClient;
 import com.cbd.android.retrofit.CBDAuthDisposalService;
 
+import java.io.File;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,8 +69,9 @@ public class PostRepository {
         return allPosts;
     }
 
-    public void createPost(String title, String description, Double price) {
-        Call<ResponseGeneric> call = cbdAuthDisposalService.createPost(title, description, price);
+    public void createPost(String title, String description, Double price, Bitmap bmp) {
+        RequestNewPost requestNewPost = new RequestNewPost(title, description, price, Utils.getBase64FromBitmap(bmp));
+        Call<ResponseGeneric> call = cbdAuthDisposalService.createPost(requestNewPost);
 
         call.enqueue(new Callback<ResponseGeneric>() {
             @Override

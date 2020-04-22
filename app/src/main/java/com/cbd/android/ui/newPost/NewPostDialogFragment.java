@@ -1,14 +1,19 @@
 package com.cbd.android.ui.newPost;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,15 +21,22 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.cbd.android.R;
+import com.cbd.android.activities.MainActivity;
 import com.cbd.android.common.Constants;
 import com.cbd.android.viewModels.PostViewModel;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.listener.single.CompositePermissionListener;
+import com.karumi.dexter.listener.single.DialogOnDeniedPermissionListener;
+import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class NewPostDialogFragment extends DialogFragment implements View.OnClickListener {
     private ImageView postExit;
-    private Button postPublishButton;
+    private Button postPublishButton, uploadPhotoButton;
     private TextView postTitleInput, postDescriptionInput, postPriceInput;
+    private PermissionListener allPermissionsListener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,10 +55,15 @@ public class NewPostDialogFragment extends DialogFragment implements View.OnClic
         postTitleInput = view.findViewById(R.id.post_title_input);
         postDescriptionInput = view.findViewById(R.id.post_description_input);
         postPriceInput = view.findViewById(R.id.post_price_input);
+        uploadPhotoButton = view.findViewById(R.id.post_upload_photo);
 
         // Eventos
         postPublishButton.setOnClickListener(this);
         postExit.setOnClickListener(this);
+        uploadPhotoButton.setOnClickListener(this);
+
+        // Seteamos la imagen del post a null
+        ((MainActivity) Objects.requireNonNull(getActivity())).setImagenSeleccionada(null);
 
         return view;
     }
@@ -58,6 +75,7 @@ public class NewPostDialogFragment extends DialogFragment implements View.OnClic
             String title = postTitleInput.getText().toString();
             String description = postDescriptionInput.getText().toString();
             String price = postPriceInput.getText().toString();
+            Uri imagenSeleccionada = ((MainActivity) Objects.requireNonNull(getActivity())).getImagenSeleccionada();
 
             if (title.isEmpty()) {
                 postTitleInput.setError(Constants.ERROR_TITULO_VACIO);
@@ -68,15 +86,39 @@ public class NewPostDialogFragment extends DialogFragment implements View.OnClic
             if (price.isEmpty()) {
                 postPriceInput.setError(Constants.ERROR_PRECIO_VACIO);
             }
-            if (!title.isEmpty() && !description.isEmpty() && !price.isEmpty()) {
+            if (imagenSeleccionada == null) {
+                Toast.makeText(getActivity(), "No has seleccionado ninguna imagen", Toast.LENGTH_SHORT).show();
+            }
+            if (!title.isEmpty() && !description.isEmpty() && !price.isEmpty() && imagenSeleccionada != null) {
                 PostViewModel postViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity()))
                         .get(PostViewModel.class);
-                postViewModel.publishPost(title, description, Double.valueOf(price));
+
+                try {
+                    Bitmap bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imagenSeleccionada);
+                    postViewModel.publishPost(title, description, Double.valueOf(price), bmp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Objects.requireNonNull(getDialog()).dismiss();
             }
         } else if (id == R.id.post_exit) {
             showDialogConfirm();
+        } else if (id == R.id.post_upload_photo) {
+            checkPermissions();
         }
+    }
+
+    private void checkPermissions() {
+        PermissionListener dialogOnDeniedPermissionListener = DialogOnDeniedPermissionListener.Builder.withContext(getActivity())
+                .withTitle("Permisos")
+                .withMessage("Los permisos solicitados son necesarios para seleccionar una imagen")
+                .withButtonText("Aceptar")
+                .withIcon(R.mipmap.ic_launcher)
+                .build();
+
+        allPermissionsListener = new CompositePermissionListener((PermissionListener) getActivity(), dialogOnDeniedPermissionListener);
+        Dexter.withContext(getActivity()).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(allPermissionsListener).check();
     }
 
     private void showDialogConfirm() {
