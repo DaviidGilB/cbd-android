@@ -54,29 +54,27 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
             if (!holder.mItem.getUser().getAvatar().isEmpty()) {
                 Glide.with(content)
                         .load(Constants.BASE_URL + holder.mItem.getUser().getAvatar())
-                        .dontAnimate()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
                         .into(holder.avatar);
             } else {
                 Glide.with(content)
                         .load(R.drawable.ic_usuario)
-                        .dontAnimate()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
                         .into(holder.avatar);
             }
             if (!holder.mItem.getPhoto().isEmpty()) {
                 Glide.with(content)
-                        .load(Utils.getBitmapFromBase64(holder.mItem.getPhoto()))
-                        .dontAnimate()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
+                        .load(Constants.BASE_URL + holder.mItem.getPhoto())
                         .into(holder.photo);
             } else {
                 holder.photo.setVisibility(View.GONE);
             }
         }
+
+        /*
+        .dontAnimate()
+        .diskCacheStrategy(DiskCacheStrategy.NONE)
+        .skipMemoryCache(true)
+         */
+
     }
 
     @Override
