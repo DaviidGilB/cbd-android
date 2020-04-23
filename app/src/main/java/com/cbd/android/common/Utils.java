@@ -31,11 +31,13 @@ public class Utils {
     public static String getBase64FromBitmap(Bitmap bmp) {
         String res = "";
         if (bmp != null) {
-            int ancho = 500;
-            float proporcion = ancho / (float) bmp.getWidth();
-            Bitmap bmpReducido = Bitmap.createScaledBitmap(bmp, ancho, (int) (bmp.getHeight() * proporcion), false);
+            int ancho = 1000;
+            if (bmp.getWidth() > ancho) {
+                float proporcion = ancho / (float) bmp.getWidth();
+                bmp = Bitmap.createScaledBitmap(bmp, ancho, (int) (bmp.getHeight() * proporcion), false);
+            }
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bmpReducido.compress(Bitmap.CompressFormat.JPEG, 40, baos);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] imagenBytes = baos.toByteArray();
             res = Base64.encodeToString(imagenBytes, Base64.DEFAULT);
         }
