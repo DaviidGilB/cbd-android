@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -17,7 +16,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cbd.android.R;
 import com.cbd.android.activities.MainActivity;
 import com.cbd.android.common.Constants;
-import com.cbd.android.common.Utils;
 import com.cbd.android.models.Post;
 import com.cbd.android.viewModels.PostViewModel;
 

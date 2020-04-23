@@ -1,11 +1,17 @@
 package com.cbd.android.activities;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cbd.android.R;
@@ -16,14 +22,23 @@ import com.cbd.android.models.RequestRegister;
 import com.cbd.android.models.ResponseGeneric;
 import com.cbd.android.retrofit.CBDisposalClient;
 import com.cbd.android.retrofit.CBDisposalService;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.CompositePermissionListener;
+import com.karumi.dexter.listener.single.DialogOnDeniedPermissionListener;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, PermissionListener {
     // Campos
     EditText usernameField, emailField, passwordField, passwordConfirmField, nameField;
+    Button userUploadPhoto;
 
     // Otros
     boolean submit;
@@ -32,6 +47,10 @@ public class RegisterActivity extends AppCompatActivity {
     CBDisposalService cbdisposalService;
     CBDisposalClient cbdisposalClient;
 
+    // Gestión imagen
+    private Uri imagenSeleccionada;
+    private PermissionListener allPermissionsListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +58,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         retrofitInit();
         fieldsInit();
+
+        userUploadPhoto.setOnClickListener(this);
     }
 
     private void retrofitInit() {
@@ -52,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
         emailField = findViewById(R.id.email_field);
         passwordField = findViewById(R.id.password_field);
         passwordConfirmField = findViewById(R.id.password_confirm_field);
+        userUploadPhoto = findViewById(R.id.user_upload_photo);
     }
 
     public void submit(View view) {
@@ -85,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if (submit) {
-            RequestRegister requestRegister = new RequestRegister(username, email, password, name);
+            RequestRegister requestRegister = new RequestRegister(username, email, password, name, "");
             Call<ResponseGeneric> call = this.cbdisposalService.register(requestRegister);
             call.enqueue(new Callback<ResponseGeneric>() {
                 @Override
@@ -113,5 +135,54 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Integer id = v.getId();
+        if (id == R.id.user_upload_photo) {
+            checkPermissions();
+        }
+    }
+
+    private void checkPermissions() {
+        PermissionListener dialogOnDeniedPermissionListener = DialogOnDeniedPermissionListener.Builder.withContext(this)
+                .withTitle("Permisos")
+                .withMessage("Los permisos solicitados son necesarios para seleccionar una imagen")
+                .withButtonText("Aceptar")
+                .withIcon(R.mipmap.ic_launcher)
+                .build();
+
+        allPermissionsListener = new CompositePermissionListener((PermissionListener) this, dialogOnDeniedPermissionListener);
+        Dexter.withContext(this).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(allPermissionsListener).check();
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode != RESULT_CANCELED) {
+            if (requestCode == Constants.SELECT_PHOTO_GALLERY) {
+                if (data != null) {
+                    imagenSeleccionada = data.getData();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+        Intent seleccionarFoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(seleccionarFoto, Constants.SELECT_PHOTO_GALLERY);
+    }
+
+    @Override
+    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+    }
+
+    @Override
+    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
     }
 }

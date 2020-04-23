@@ -174,9 +174,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setImagenSeleccionada(Uri imagenSeleccionada) {
         this.imagenSeleccionada = imagenSeleccionada;
     }
-
-    public void recargaFragmentoAllPosts() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, PostListFragment.newInstance(Constants.POST_LIST_ALL)).commit();
-    }
 }
