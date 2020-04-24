@@ -18,9 +18,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
 import com.cbd.android.R;
 import com.cbd.android.common.Constants;
+import com.cbd.android.common.MyApp;
+import com.cbd.android.common.Responses;
 import com.cbd.android.common.Utils;
+import com.cbd.android.models.ResponseUser;
+import com.cbd.android.retrofit.CBDAuthDisposalClient;
+import com.cbd.android.retrofit.CBDAuthDisposalService;
 import com.cbd.android.ui.home.PostListFragment;
 import com.cbd.android.ui.newPost.NewPostDialogFragment;
 import com.cbd.android.viewModels.PostViewModel;
@@ -34,15 +40,23 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, PermissionListener {
     private BottomNavigationView navView;
     private FloatingActionButton fab;
-    private ImageView appExitImage;
-    private TextView appExitText;
+    private ImageView appExitImage, actionBarImage;
+    private TextView appExitText, userNameText;
     private PostViewModel postViewModel;
 
     // Gestión imagen
     private Uri imagenSeleccionada;
+
+    // Servicios
+    private CBDAuthDisposalClient cbdAuthDisposalClient;
+    private CBDAuthDisposalService cbdAuthDisposalService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab = findViewById(R.id.fab);
         appExitImage = findViewById(R.id.app_exit);
         appExitText = findViewById(R.id.app_exit_text);
+        actionBarImage = findViewById(R.id.action_bar_image);
+        userNameText = findViewById(R.id.user_name_text);
 
         // Carga del fragment
         getSupportFragmentManager().beginTransaction()
@@ -100,6 +116,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         appExitText.setOnClickListener(this);
         appExitImage.setOnClickListener(this);
 
+        retrofitInit();
+
+    }
+
+    private void retrofitInit() {
+        cbdAuthDisposalClient = CBDAuthDisposalClient.getInstance();
+        cbdAuthDisposalService = cbdAuthDisposalClient.getCBDAuthDisposalService();
     }
 
     @Override
@@ -173,5 +196,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void setImagenSeleccionada(Uri imagenSeleccionada) {
         this.imagenSeleccionada = imagenSeleccionada;
+    }
+
+    public void loadUser() {
+        Call<ResponseUser> call = this.cbdAuthDisposalService.getUserLogged();
+        call.enqueue(new Callback<ResponseUser>() {
+            @Override
+            public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
+                if (response.body().getInfo().getCode() == Responses.OK_USUARIO_RECUPERADO_CORRECTAMENTE) {
+                    userNameText.setText(response.body().getUser().getName());
+                    if (!response.body().getUser().getAvatar().isEmpty()) {
+                        Glide.with(MyApp.getContext())
+                                .load(Constants.BASE_URL + response.body().getUser().getAvatar())
+                                .centerCrop()
+                                .into(actionBarImage);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseUser> call, Throwable t) {
+
+            }
+        });
     }
 }

@@ -91,6 +91,7 @@ public class PostListFragment extends Fragment {
             public void onChanged(List<Post> posts) {
                 if (posts != null) {
                     postList = posts;
+                    ((MainActivity) Objects.requireNonNull(getActivity())).loadUser();
                     adapter.setData(postList);
                 } else {
                     ((MainActivity) Objects.requireNonNull(getActivity())).exit();
@@ -106,6 +107,7 @@ public class PostListFragment extends Fragment {
                 if (posts != null) {
                     postList = posts;
                     adapter.setData(postList);
+                    ((MainActivity) Objects.requireNonNull(getActivity())).loadUser();
                     swipeRefreshLayout.setRefreshing(false);
                 } else {
                     ((MainActivity) Objects.requireNonNull(getActivity())).exit();
