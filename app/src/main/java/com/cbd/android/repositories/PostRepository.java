@@ -71,7 +71,7 @@ public class PostRepository {
     }
 
     public void createPost(String title, String description, Double price, Bitmap bmp) {
-        RequestNewPost requestNewPost = new RequestNewPost(title, description, price, Utils.getBase64FromBitmap(bmp));
+        RequestNewPost requestNewPost = new RequestNewPost(title, description, price, Utils.getBase64FromBitmap(bmp, 1000, 100));
         Call<ResponseGeneric> call = cbdAuthDisposalService.createPost(requestNewPost);
 
         call.enqueue(new Callback<ResponseGeneric>() {

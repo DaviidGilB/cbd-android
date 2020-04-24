@@ -3,6 +3,7 @@ package com.cbd.android.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,6 +31,8 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.CompositePermissionListener;
 import com.karumi.dexter.listener.single.DialogOnDeniedPermissionListener;
 import com.karumi.dexter.listener.single.PermissionListener;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -107,7 +110,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (submit) {
-            RequestRegister requestRegister = new RequestRegister(username, email, password, name, "");
+            Bitmap bmp = null;
+            if (imagenSeleccionada != null) {
+                try {
+                    bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imagenSeleccionada);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            String avatar = Utils.getBase64FromBitmap(bmp, 200, 80);
+            RequestRegister requestRegister = new RequestRegister(username, email, password, name, avatar);
             Call<ResponseGeneric> call = this.cbdisposalService.register(requestRegister);
             call.enqueue(new Callback<ResponseGeneric>() {
                 @Override

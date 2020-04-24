@@ -28,16 +28,15 @@ public class Utils {
         saveToken(null);
     }
 
-    public static String getBase64FromBitmap(Bitmap bmp) {
+    public static String getBase64FromBitmap(Bitmap bmp, int ancho, int quality) {
         String res = "";
         if (bmp != null) {
-            int ancho = 1000;
             if (bmp.getWidth() > ancho) {
                 float proporcion = ancho / (float) bmp.getWidth();
                 bmp = Bitmap.createScaledBitmap(bmp, ancho, (int) (bmp.getHeight() * proporcion), false);
             }
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            bmp.compress(Bitmap.CompressFormat.JPEG, quality, baos);
             byte[] imagenBytes = baos.toByteArray();
             res = Base64.encodeToString(imagenBytes, Base64.DEFAULT);
         }
