@@ -86,12 +86,12 @@ public class PostListFragment extends Fragment {
     }
 
     private void loadData() {
+        ((MainActivity) Objects.requireNonNull(getActivity())).loadUser();
         postViewModel.getPosts().observe(Objects.requireNonNull(getActivity()), new Observer<List<Post>>() {
             @Override
             public void onChanged(List<Post> posts) {
                 if (posts != null) {
                     postList = posts;
-                    ((MainActivity) Objects.requireNonNull(getActivity())).loadUser();
                     adapter.setData(postList);
                 } else {
                     ((MainActivity) Objects.requireNonNull(getActivity())).exit();
@@ -101,13 +101,13 @@ public class PostListFragment extends Fragment {
     }
 
     private void loadRefreshedData() {
+        ((MainActivity) Objects.requireNonNull(getActivity())).loadUser();
         postViewModel.getRefreshedPosts().observe(Objects.requireNonNull(getActivity()), new Observer<List<Post>>() {
             @Override
             public void onChanged(List<Post> posts) {
                 if (posts != null) {
                     postList = posts;
                     adapter.setData(postList);
-                    ((MainActivity) Objects.requireNonNull(getActivity())).loadUser();
                     swipeRefreshLayout.setRefreshing(false);
                 } else {
                     ((MainActivity) Objects.requireNonNull(getActivity())).exit();
