@@ -53,7 +53,7 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
             holder.userInfo.setText(holder.mItem.getUser().getName() + " (" + holder.mItem.getUser().getEmail() + ")");
             if (!holder.mItem.getUser().getAvatar().isEmpty()) {
                 Glide.with(content)
-                        .load(Constants.BASE_URL + holder.mItem.getUser().getAvatar())
+                        .load(holder.mItem.getUser().getAvatar())
                         .into(holder.avatar);
             } else {
                 Glide.with(content)
@@ -62,7 +62,7 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
             }
             if (!holder.mItem.getPhoto().isEmpty()) {
                 Glide.with(content)
-                        .load(Constants.BASE_URL + holder.mItem.getPhoto())
+                        .load(holder.mItem.getPhoto())
                         .into(holder.photo);
             } else {
                 holder.photo.setVisibility(View.GONE);

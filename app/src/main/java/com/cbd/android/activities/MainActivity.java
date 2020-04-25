@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     userNameText.setText(response.body().getUser().getName());
                     if (!response.body().getUser().getAvatar().isEmpty()) {
                         Glide.with(MyApp.getContext())
-                                .load(Constants.BASE_URL + response.body().getUser().getAvatar())
+                                .load(response.body().getUser().getAvatar())
                                 .centerCrop()
                                 .into(actionBarImage);
                     }
