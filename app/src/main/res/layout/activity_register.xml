@@ -10,7 +10,7 @@
         android:id="@+id/username_field"
         android:layout_width="320dp"
         android:layout_height="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/username_field_mayus"
         android:inputType="textPersonName"
@@ -69,17 +69,17 @@
         app:layout_constraintTop_toBottomOf="@+id/user_upload_photo"
         tools:ignore="RtlSymmetry" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/login_logo"
-        android:layout_width="318dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="80dp"
         android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_logo" />
+        android:src="@drawable/ic_account_circle_primary_24dp" />
 
     <EditText
         android:id="@+id/email_field"

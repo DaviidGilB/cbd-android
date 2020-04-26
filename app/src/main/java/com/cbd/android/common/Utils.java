@@ -48,4 +48,13 @@ public class Utils {
         return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
+    public static void rescaleBitmap(Bitmap bmp, int ancho, int quality) {
+        if (bmp.getWidth() > ancho) {
+            float proporcion = ancho / (float) bmp.getWidth();
+            bmp = Bitmap.createScaledBitmap(bmp, ancho, (int) (bmp.getHeight() * proporcion), false);
+        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+    }
+
 }

@@ -88,4 +88,16 @@
         app:layout_constraintStart_toStartOf="@+id/post_description_input"
         app:layout_constraintTop_toBottomOf="@+id/post_description_input" />
 
+    <ImageView
+        android:id="@+id/imagen_post_pre"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="32dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="@+id/post_price_input"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/post_price_input"
+        app:layout_constraintTop_toBottomOf="@+id/post_upload_photo"
+        app:srcCompat="@drawable/ic_imagen" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

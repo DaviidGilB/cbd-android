@@ -38,6 +38,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -57,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // Servicios
     private CBDAuthDisposalClient cbdAuthDisposalClient;
     private CBDAuthDisposalService cbdAuthDisposalService;
+
+    // Dialog fragment
+    private NewPostDialogFragment newPostDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +111,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewPostDialogFragment dialogFragment = new NewPostDialogFragment();
-                dialogFragment.show(getSupportFragmentManager(), "NewPostDialogFragment");
+                newPostDialogFragment = new NewPostDialogFragment();
+                newPostDialogFragment.show(getSupportFragmentManager(), "NewPostDialogFragment");
             }
         });
 
@@ -169,6 +173,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (requestCode == Constants.SELECT_PHOTO_GALLERY) {
                 if (data != null) {
                     imagenSeleccionada = data.getData();
+                    if (newPostDialogFragment != null) {
+                        try {
+                            newPostDialogFragment.loadImage(imagenSeleccionada);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
         }

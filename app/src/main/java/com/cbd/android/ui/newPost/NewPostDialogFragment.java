@@ -19,9 +19,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
 import com.cbd.android.R;
 import com.cbd.android.activities.MainActivity;
 import com.cbd.android.common.Constants;
+import com.cbd.android.common.Utils;
 import com.cbd.android.viewModels.PostViewModel;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.listener.single.CompositePermissionListener;
@@ -32,7 +34,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class NewPostDialogFragment extends DialogFragment implements View.OnClickListener {
-    private ImageView postExit;
+    private ImageView postExit, imagenPostPre;
     private Button postPublishButton, uploadPhotoButton;
     private TextView postTitleInput, postDescriptionInput, postPriceInput;
     private PermissionListener allPermissionsListener;
@@ -55,6 +57,8 @@ public class NewPostDialogFragment extends DialogFragment implements View.OnClic
         postDescriptionInput = view.findViewById(R.id.post_description_input);
         postPriceInput = view.findViewById(R.id.post_price_input);
         uploadPhotoButton = view.findViewById(R.id.post_upload_photo);
+        imagenPostPre = view.findViewById(R.id.imagen_post_pre);
+        imagenPostPre.setVisibility(View.GONE);
 
         // Eventos
         postPublishButton.setOnClickListener(this);
@@ -65,6 +69,16 @@ public class NewPostDialogFragment extends DialogFragment implements View.OnClic
         ((MainActivity) Objects.requireNonNull(getActivity())).setImagenSeleccionada(null);
 
         return view;
+    }
+
+    public void loadImage(Uri uri) throws IOException {
+        Bitmap bmp = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getActivity()).getContentResolver(), uri);
+        Utils.rescaleBitmap(bmp, 1000, 100);
+        Glide.with(this)
+                .load(bmp)
+                .centerCrop()
+                .into(imagenPostPre);
+        imagenPostPre.setVisibility(View.VISIBLE);
     }
 
     @Override

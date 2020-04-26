@@ -10,11 +10,13 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.cbd.android.R;
 import com.cbd.android.common.Constants;
 import com.cbd.android.common.Responses;
@@ -42,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     // Campos
     EditText usernameField, emailField, passwordField, passwordConfirmField, nameField;
     Button userUploadPhoto;
+    ImageView loginLogo;
 
     // Otros
     boolean submit;
@@ -77,6 +80,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         passwordField = findViewById(R.id.password_field);
         passwordConfirmField = findViewById(R.id.password_confirm_field);
         userUploadPhoto = findViewById(R.id.user_upload_photo);
+        loginLogo = findViewById(R.id.login_logo);
     }
 
     public void submit(View view) {
@@ -177,6 +181,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             if (requestCode == Constants.SELECT_PHOTO_GALLERY) {
                 if (data != null) {
                     imagenSeleccionada = data.getData();
+                    Bitmap bmp = null;
+                    try {
+                        bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imagenSeleccionada);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (bmp != null) {
+                        Utils.rescaleBitmap(bmp, 200, 80);
+                        Glide.with(this)
+                                .load(bmp)
+                                .centerCrop()
+                                .into(loginLogo);
+                    }
                 }
             }
         }
