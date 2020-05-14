@@ -65,7 +65,9 @@ public class MyPostRecyclerViewAdapter extends RecyclerView.Adapter<MyPostRecycl
                         .load(holder.mItem.getPhoto())
                         .into(holder.photo);
             } else {
-                holder.photo.setVisibility(View.GONE);
+                Glide.with(content)
+                        .load(R.drawable.ic_imagen)
+                        .into(holder.photo);
             }
         }
 
