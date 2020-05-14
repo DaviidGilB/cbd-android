@@ -101,18 +101,9 @@ public class PostListFragment extends Fragment {
     }
 
     private void loadRefreshedData() {
-        ((MainActivity) Objects.requireNonNull(getActivity())).loadUser();
-        postViewModel.getRefreshedPosts().observe(Objects.requireNonNull(getActivity()), new Observer<List<Post>>() {
-            @Override
-            public void onChanged(List<Post> posts) {
-                if (posts != null) {
-                    postList = posts;
-                    adapter.setData(postList);
-                    swipeRefreshLayout.setRefreshing(false);
-                } else {
-                    ((MainActivity) Objects.requireNonNull(getActivity())).exit();
-                }
-            }
-        });
+        adapter = new MyPostRecyclerViewAdapter(getActivity(), postList);
+        recyclerView.setAdapter(adapter);
+        loadData();
+        swipeRefreshLayout.setRefreshing(false);
     }
 }
