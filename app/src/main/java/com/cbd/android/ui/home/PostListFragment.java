@@ -100,10 +100,8 @@ public class PostListFragment extends Fragment {
         });
     }
 
-    private void loadRefreshedData() {
-        adapter = new MyPostRecyclerViewAdapter(getActivity(), postList);
-        recyclerView.setAdapter(adapter);
-        loadData();
+    public void loadRefreshedData() {
+        adapter.setData(postViewModel.getRefreshedPosts().getValue());
         swipeRefreshLayout.setRefreshing(false);
     }
 }
